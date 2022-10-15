@@ -106,7 +106,7 @@ resource "aws_security_group" "dev-vpc-sg" {
   }
 
   egress {
-    description = "Allow all IP and Ports Outbound"
+    description = "Allow all IP and Ports Outbound rule"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
