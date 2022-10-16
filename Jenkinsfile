@@ -16,7 +16,7 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git "git@github.com:askossivi/TheHive-Deployment.git"
+                            git "https://github.com/askossivi/TheHive-Deployment"
                         }
                     }
                 }
