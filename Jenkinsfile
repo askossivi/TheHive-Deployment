@@ -77,36 +77,6 @@
 
 //Missing AWS Cred
 
-// pipeline {
-//     agent any
-
-//     stages {
-//         stage('Checkout') {
-//             steps {
-//             checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/askossivi/TheHive-Deployment.git']]])            
-
-//           }
-//         }
-        
-//         stage ("terraform init") {
-//             steps {
-//                 sh ('terraform init') 
-//             }
-//         }
-        
-//         stage ("terraform Action") {
-//             steps {
-//                 echo "Terraform action is --> ${action}"
-//                 sh ('terraform ${action} --auto-approve') 
-//            }
-//         }
-//     }
-// }
-
-
-
-
-
 
 
 pipeline {
@@ -120,28 +90,69 @@ pipeline {
           }
         }
 
-        withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: "credentials-id-here",
-            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-        ]]) {
+       stage('aws') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: "AWSACCESS_ID",
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]])
+            } 
         stage ("terraform init") {
             steps {
                 sh ('terraform init') 
             }
         }
-        
         stage ("terraform Action") {
             steps {
                 echo "Terraform action is --> ${action}"
                 sh ('terraform ${action} --auto-approve') 
            }
-         }
         }
     }
-
 }
+
+
+
+
+
+
+// pipeline {
+//     agent any
+
+//     stages {
+//         stage('Checkout') {
+//             steps {
+//             checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/askossivi/TheHive-Deployment.git']]])            
+
+//           }
+//         }
+
+//         withCredentials([[
+//             $class: 'AmazonWebServicesCredentialsBinding',
+//             credentialsId: "credentials-id-here",
+//             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+//             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+//         ]]) {
+//         stage ("terraform init") {
+//             steps {
+//                 sh ('terraform init') 
+//             }
+//         }
+        
+//         stage ("terraform Action") {
+//             steps {
+//                 echo "Terraform action is --> ${action}"
+//                 sh ('terraform ${action} --auto-approve') 
+//            }
+//          }
+//         }
+//     }
+
+// }
+
+
 
 
 
