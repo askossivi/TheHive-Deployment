@@ -7,14 +7,11 @@ pipeline {
         booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy Terraform build?')
 
     }
-//      environment {
-//         withCredentials([[
-//             $class: 'AmazonWebServicesCredentialsBinding',
-//             credentialsId: "AWSACCESS_ID",
-//             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-//             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-//             ]])
-//     }
+     environment {
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    }
+    
     stages {
         stage('checkout') {
             steps {
