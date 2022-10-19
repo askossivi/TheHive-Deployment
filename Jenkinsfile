@@ -52,24 +52,31 @@ pipeline {
                }
            }
        }
-        stage('Apply') {
-            when {
-                not {
-                    equals expected: true, actual: params.destroy
-                }
-            }
+        
+        stage ("terraform Action") {
             steps {
-                sh "terraform apply -input=false tfplan"
-            }
-        }
-        stage('Destroy') {
-            when {
-                equals expected: true, actual: params.destroy
-            }
-        steps {
-           sh "terraform destroy --auto-approve"
-        }
-    }
+                echo "Terraform action is --> ${action}"
+                sh ('terraform ${action} --auto-approve') 
+           }
+        }        
+//         stage('Apply') {
+//             when {
+//                 not {
+//                     equals expected: true, actual: params.destroy
+//                 }
+//             }
+//             steps {
+//                 sh "terraform apply -input=false tfplan"
+//             }
+//         }
+//         stage('Destroy') {
+//             when {
+//                 equals expected: true, actual: params.destroy
+//             }
+//         steps {
+//            sh "terraform destroy --auto-approve"
+//         }
+//     }
   }
 }
 
