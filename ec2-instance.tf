@@ -19,37 +19,37 @@ resource "aws_instance" "my-ec2-vm" {
 
   }
 
-# Connection Block for Provisioners to connect to EC2 Instance
-  connection {
-    type = "ssh"
-    host = self.public_ip # Understand what is "self"
-    user = "ec2-user"
-    password = ""
-    private_key = file("private-key/terraform-key")
-  }  
+# # Connection Block for Provisioners to connect to EC2 Instance
+#   connection {
+#     type = "ssh"
+#     host = self.public_ip # Understand what is "self"
+#     user = "ec2-user"
+#     password = ""
+#     private_key = file("private-key/terraform-key")
+#   }  
 
- # Copies the file-copy.html file to /tmp/file-copy.html
-  provisioner "file" {
-    source      = "apps/docker-compose.yml"
-    destination = "/home/ec2-user/docker-compose.yml"
-  }
+#  # Copies the file-copy.html file to /tmp/file-copy.html
+#   provisioner "file" {
+#     source      = "apps/docker-compose.yml"
+#     destination = "/home/ec2-user/docker-compose.yml"
+#   }
 
- # Copies the file-copy.html file to /tmp/file-copy.html
-  provisioner "file" {
-    source      = "scripts/TheHive-install.sh"
-    destination = "/home/ec2-user/TheHive-install.sh"
-  }
+#  # Copies the file-copy.html file to /tmp/file-copy.html
+#   provisioner "file" {
+#     source      = "scripts/TheHive-install.sh"
+#     destination = "/home/ec2-user/TheHive-install.sh"
+#   }
 
 
-# Execute a command to install TheHive
-provisioner "remote-exec" {
-    inline = [
-       "chmod +x /home/ec2-user/TheHive-install.sh",
-       "cd /home/ec2-user",
-       #"TheHive-install.sh",
-       #"docker-compose up -d"
-    ]
-}
+# # Execute a command to install TheHive
+# provisioner "remote-exec" {
+#     inline = [
+#        "chmod +x /home/ec2-user/TheHive-install.sh",
+#        "cd /home/ec2-user",
+#        #"TheHive-install.sh",
+#        #"docker-compose up -d"
+#     ]
+# }
 
 }
 
