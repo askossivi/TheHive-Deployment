@@ -26,7 +26,6 @@ pipeline {
             }
             steps {
                 sh 'terraform init -input=false'
-//                 sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
                 sh "terraform plan -input=false -out tfplan "
                 sh 'terraform show -no-color tfplan > tfplan.txt'
@@ -50,12 +49,7 @@ pipeline {
            }
        }
         
-//         stage ("terraform Action") {
-//             steps {
-//                 echo "Terraform action is --> ${action}"
-//                 sh ('terraform ${action} --auto-approve') 
-//            }
-//         }        
+       
         stage('Apply') {
             when {
                 not {
